@@ -7,3 +7,5 @@ $ bower install
 $ cd server/
 $ node server.js
 ```
+
+The server will then be running on port 4000.

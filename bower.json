@@ -1,0 +1,22 @@
+{
+  "name": "dbproject",
+  "description": "Nabil's Thesis Project",
+  "main": "index.js",
+  "authors": [
+    "Nabil"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#^1.5.7",
+    "d3": "^4.1.1"
+  }
+}

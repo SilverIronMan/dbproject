@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const eslint = require('gulp-eslint');
 const nodemon = require('gulp-nodemon');
-const karma = require('karma').Server;
+const Karma = require('karma').Server;
 
 
 const sassFiles = './public/assets/sass/*.scss';
@@ -17,7 +17,7 @@ gulp.task('lint', () => {
 
 // STUB
 gulp.task('test', () => {
-  new karma({
+  new Karma({
     configFile: __dirname + '/karma.conf.js',
   }).start();
 });

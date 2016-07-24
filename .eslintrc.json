@@ -2,6 +2,9 @@
 	"extends": "airbnb",
   "rules": {
     "func-names": 0,
-    "no-unused-vars": 1
+    "no-unused-vars": 1,
+    "arrow-body-style": 0,
+    "quote-props": 0,
+    "prefer-template": 0
   }
 }

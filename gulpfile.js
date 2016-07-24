@@ -1,39 +1,43 @@
 const gulp = require('gulp');
-// const minifyCss = require("gulp-minify-css");
-// const sass = require("gulp-sass");
+const sass = require('gulp-sass');
 const eslint = require('gulp-eslint');
+const nodemon = require('gulp-nodemon');
 
+const sassFiles = './public/assets/sass/*.scss';
+
+// ES Lint (using Airbnb)
 gulp.task('lint', () => {
-  // ESLint ignores files with "node_modules" paths.
-  // So, it's best to have gulp ignore the directory as well.
-  // Also, Be sure to return the stream from the task;
-  // Otherwise, the task may end before the stream has finished.
-  return gulp.src(['**/*.js', '!node_modules/**'])
-    // eslint() attaches the lint output to the "eslint" property
-    // of the file object so it can be used by other modules.
+  return gulp.src(['**/*.js', '!node_modules/**', '!./public/assets/**', '!bower_components/**'])
     .pipe(eslint())
-    // eslint.format() outputs the lint results to the console.
-    // Alternatively use eslint.formatEach() (see Docs).
     .pipe(eslint.format())
-    // To have the process exit with an error code (1) on
-    // lint error, return the stream and pipe to failAfterError last.
     .pipe(eslint.failAfterError());
 });
 
-/* // task
-gulp.task('compile-sass', function () {
-  gulp.src('./Sass/one.sass') // path to your file
-  .pipe(sass())
-  .pipe(gulp.dest('path/to/destination'));
-}); */
-
-/* // task
-gulp.task('minify-css', function () {
-  gulp.src('./Css/one.css') // path to your file
-  .pipe(minifyCss())
-  .pipe(gulp.dest('path/to/destination'));
-});*/
-
-gulp.task('default', () => {
-  return true;
+// Copy Files
+gulp.task('dependencies', () => {
+  gulp.src('./bower_components/**/*', { base: './bower_components' })
+    .pipe(gulp.dest('./public/assets/lib'));
 });
+
+// Compile the SCSS
+gulp.task('sass', () => {
+  return gulp.src(sassFiles)
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('./public/assets/css'));
+});
+
+// Watch the SCSS
+gulp.task('sass-watch', () => {
+  gulp.watch(sassFiles, ['sass']);
+});
+
+// Start the server
+gulp.task('start', () => {
+  nodemon({
+    script: './server/server.js',
+    ext: 'js json html',
+    env: { 'NODE_ENV': 'development' },
+  });
+});
+
+gulp.task('default', ['dependencies', 'sass', 'sass-watch', 'start']);

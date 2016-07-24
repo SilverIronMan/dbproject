@@ -14,8 +14,7 @@ if (process.env.VCAP_APP_PORT !== undefined) {
 }
 
 const server = app.listen(appPort, () => {
-  const host = server.address().address;
   const port = server.address().port;
   // eslint-disable-next-line no-console
-  console.log('App listening on http://%s:%s', host, port);
+  console.log('App listening on http://localhost:', port);
 });

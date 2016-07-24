@@ -13,6 +13,11 @@ gulp.task('lint', () => {
     .pipe(eslint.failAfterError());
 });
 
+// STUB
+gulp.task('test', () => {
+  return true;
+});
+
 // Copy Files
 gulp.task('dependencies', () => {
   gulp.src('./bower_components/**/*', { base: './bower_components' })

@@ -15,7 +15,7 @@ gulp.task('lint', () => {
     .pipe(eslint.failAfterError());
 });
 
-// STUB
+// Runs the tests found in the test folder
 gulp.task('test', () => {
   new Karma({
     configFile: __dirname + '/karma.conf.js',

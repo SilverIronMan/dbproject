@@ -15,8 +15,8 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     autoWatch: false,
-    browsers: ['Chrome'],
-    plugins: ['karma-chrome-launcher', 'karma-firefox-launcher', 'karma-jasmine'],
+    browsers: ['PhantomJS'],
+    plugins: ['karma-phantomjs-launcher', 'karma-jasmine'],
     singleRun: true,
   });
 };

@@ -7,3 +7,10 @@ script:
   - gulp lint
   - gulp test
   - gulp &
+
+deploy:
+  on:
+    branch: master
+  provider: heroku
+  api_key:
+    secure: "YOUR ENCRYPTED API KEY"

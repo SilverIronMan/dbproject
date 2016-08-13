@@ -2,18 +2,17 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const eslint = require('gulp-eslint');
 const nodemon = require('gulp-nodemon');
+const rename = require('gulp-rename');
+const processhtml = require('gulp-processhtml');
 const Karma = require('karma').Server;
 
+const jsLintFiles = ['**/*.js', '!node_modules/**', '!./public/assets/**',
+  '!./public/lib/**', '!bower_components/**'];
+const sassFiles = './sass/*.scss';
 
-const sassFiles = './public/assets/sass/*.scss';
-
-// ES Lint (using Airbnb)
-gulp.task('lint', () => {
-  return gulp.src(['**/*.js', '!node_modules/**', '!./public/assets/**', '!bower_components/**'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
-});
+/**
+ * Tests
+ */
 
 // Runs the tests found in the test folder
 gulp.task('test', () => {
@@ -22,10 +21,14 @@ gulp.task('test', () => {
   }).start();
 });
 
+/**
+ * Development Enviroment
+ */
+
 // Copy Files
 gulp.task('dependencies', () => {
   gulp.src('./bower_components/**/*', { base: './bower_components' })
-    .pipe(gulp.dest('./public/assets/lib'));
+    .pipe(gulp.dest('./public/lib'));
 });
 
 // Compile the SCSS
@@ -36,8 +39,14 @@ gulp.task('sass', () => {
 });
 
 // Watch the SCSS
-gulp.task('sass-watch', () => {
+gulp.task('sass-watch', ['sass'], () => {
   gulp.watch(sassFiles, ['sass']);
+});
+
+gulp.task('html', () => {
+  return gulp.src('./public/index-build.html')
+    .pipe(rename('index.html'))
+    .pipe(gulp.dest('./public/'));
 });
 
 // Start the server
@@ -49,4 +58,46 @@ gulp.task('start', () => {
   });
 });
 
-gulp.task('default', ['dependencies', 'sass', 'sass-watch', 'start']);
+// ES Lint (using Airbnb)
+gulp.task('lint', () => {
+  return gulp.src(jsLintFiles)
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
+
+// ES Lint (using Airbnb)
+gulp.task('lint-watch', () => {
+  gulp.watch(jsLintFiles, ['lint']);
+});
+
+gulp.task('default', ['dependencies', 'sass-watch', 'html', 'start', 'lint-watch']);
+
+/**
+ * Production Enviroment
+ */
+
+gulp.task('sass:prod', () => {
+  return gulp.src(sassFiles)
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(rename('style.min.css'))
+    .pipe(gulp.dest('./public/assets/css'));
+});
+
+gulp.task('html:prod', () => {
+  return gulp.src('./public/index-build.html')
+    .pipe(processhtml())
+    .pipe(rename('index.html'))
+    .pipe(gulp.dest('./public/'));
+});
+
+// Start the server
+gulp.task('start:prod', () => {
+  nodemon({
+    script: './server/server.js',
+    ext: 'js json html',
+    env: { 'NODE_ENV': 'production' },
+  });
+});
+
+gulp.task('prod', ['dependencies', 'html:prod', 'sass:prod']);

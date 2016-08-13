@@ -3,5 +3,6 @@ node_modules/
 .git
 .sass-cashe
 bower_components/
-public/assets/css/
-public/assets/lib/
+public/assets
+public/lib
+public/index.html

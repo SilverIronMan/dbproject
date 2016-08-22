@@ -3,6 +3,7 @@ This is my thesis for College.
 Clone the repo then run
 ```
 $ npm install
+$ npm install --global gulp-cli
 $ gulp
 ```
 

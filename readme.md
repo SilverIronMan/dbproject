@@ -1,3 +1,4 @@
+[![Code Climate](https://codeclimate.com/github/SilverIronMan/dbproject/badges/gpa.svg)](https://codeclimate.com/github/SilverIronMan/dbproject)
 This is my thesis for College.
 
 Clone the repo then run

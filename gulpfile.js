@@ -7,7 +7,7 @@ const processhtml = require('gulp-processhtml');
 const Karma = require('karma').Server;
 
 const jsLintFiles = ['**/*.js', '!node_modules/**', '!./public/assets/**',
-  '!./public/lib/**', '!bower_components/**'];
+  '!./public/lib/**', '!bower_components/**', '!coverage/**'];
 const sassFiles = './sass/*.scss';
 
 /**

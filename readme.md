@@ -10,4 +10,4 @@ $ gulp
 The server will then be running on port 4000.
 
 ## About
-I am using es-lint to help ensure the quality of the code.
+I am using es-lint to help ensure the quality of the code. Additionally, I am using Node Security to ensure the security of my node modules.

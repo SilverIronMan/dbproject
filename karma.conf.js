@@ -12,7 +12,7 @@ module.exports = function (config) {
     exclude: [
     ],
     preprocessors: {
-      'public/**/*.js': ['coverage']
+      'public/**/*.js': ['coverage'],
     },
     port: 9876,
     colors: true,
@@ -22,8 +22,8 @@ module.exports = function (config) {
     singleRun: true,
     reporters: ['progress', 'coverage'],
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
+      type: 'html',
+      dir: 'coverage/',
     },
   });
 };

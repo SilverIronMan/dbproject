@@ -11,6 +11,14 @@ const jsLintFiles = ['**/*.js', '!node_modules/**', '!./public/assets/**',
   '!./public/lib/**', '!bower_components/**', '!coverage/**'];
 const sassFiles = './sass/*.scss';
 
+const server = (env) => {
+  nodemon({
+    script: './server/server.js',
+    ext: 'js json html',
+    env: { 'NODE_ENV': env },
+  });
+}
+
 /**
  * Tests
  */
@@ -52,11 +60,7 @@ gulp.task('html', () => {
 
 // Start the server
 gulp.task('start', () => {
-  nodemon({
-    script: './server/server.js',
-    ext: 'js json html',
-    env: { 'NODE_ENV': 'development' },
-  });
+  server('development');
 });
 
 // ES Lint (using Airbnb)
@@ -94,11 +98,7 @@ gulp.task('html:prod', () => {
 
 // Start the server
 gulp.task('start:prod', () => {
-  nodemon({
-    script: './server/server.js',
-    ext: 'js json html',
-    env: { 'NODE_ENV': 'production' },
-  });
+  server('production')
 });
 
 gulp.task('prod', ['dependencies', 'html:prod', 'sass:prod']);

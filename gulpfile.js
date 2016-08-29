@@ -5,6 +5,7 @@ const nodemon = require('gulp-nodemon');
 const rename = require('gulp-rename');
 const processhtml = require('gulp-processhtml');
 const Karma = require('karma').Server;
+const path = require('path');
 
 const jsLintFiles = ['**/*.js', '!node_modules/**', '!./public/assets/**',
   '!./public/lib/**', '!bower_components/**', '!coverage/**'];
@@ -17,7 +18,7 @@ const sassFiles = './sass/*.scss';
 // Runs the tests found in the test folder
 gulp.task('test', () => {
   new Karma({
-    configFile: __dirname + '/karma.conf.js',
+    configFile: path.join(__dirname, '/karma.conf.js'),
   }).start();
 });
 

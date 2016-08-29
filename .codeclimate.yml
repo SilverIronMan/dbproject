@@ -23,15 +23,3 @@ ratings:
   - "**.rb"
 exclude_paths:
 - test/
-engines:
-  eslint:
-    enabled: true
-  csslint:
-    enabled: true
-ratings:
-  paths:
-    - server/**
-    - sass/**
-    - test/**
-    - public/app/**
-    - public/index-build.html

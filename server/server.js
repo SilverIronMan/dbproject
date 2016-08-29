@@ -1,12 +1,14 @@
 const express = require('express');
+const path = require('path');
+
 const app = express();
 
 let appPort = 4000;
 
-app.use(express.static(__dirname + '/../public'));
+app.use(express.static(path.join(__dirname, '/../public')));
 
 app.get('/', (res) => {
-  res.sendfile(__dirname + '/../public/index.html');
+  res.sendfile(path.join(__dirname, '/../public/index.html'));
 });
 
 if (process.env.VCAP_APP_PORT !== undefined) {

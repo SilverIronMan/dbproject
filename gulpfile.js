@@ -17,7 +17,7 @@ const server = (env) => {
     ext: 'js json html',
     env: { 'NODE_ENV': env },
   });
-}
+};
 
 /**
  * Tests
@@ -98,7 +98,7 @@ gulp.task('html:prod', () => {
 
 // Start the server
 gulp.task('start:prod', () => {
-  server('production')
+  server('production');
 });
 
 gulp.task('prod', ['dependencies', 'html:prod', 'sass:prod']);

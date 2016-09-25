@@ -1,12 +1,25 @@
 const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+// const MongoClient = require('mongodb').MongoClient;
+
 const app = express();
 
 let appPort = 4000;
 
-app.use(express.static(__dirname + '/../public'));
+/* MongoClient.connect('link-to-mongodb', (err, database) => {
+  // ... start the server
+});*/
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '/../public')));
 
 app.get('/', (res) => {
-  res.sendfile(__dirname + '/../public/index.html');
+  res.sendfile(path.join(__dirname, '/../public/index.html'));
+});
+
+app.post('/quotes', (req) => {
+  console.log(req.body);
 });
 
 if (process.env.VCAP_APP_PORT !== undefined) {
@@ -14,8 +27,7 @@ if (process.env.VCAP_APP_PORT !== undefined) {
 }
 
 const server = app.listen(appPort, () => {
-  const host = server.address().address;
   const port = server.address().port;
   // eslint-disable-next-line no-console
-  console.log('App listening on http://%s:%s', host, port);
+  console.log('App listening on http://localhost:', port);
 });

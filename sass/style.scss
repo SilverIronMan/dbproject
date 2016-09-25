@@ -1,0 +1,72 @@
+$grids: (
+  'small': (
+    'grid': 4,
+    'column': 60px,
+    'gutter': 20px,
+  ),
+  'big': (
+    'grid': 12,
+    'column': 60px,
+    'gutter': 20px,
+  ),
+);
+
+$spans: (
+  'sidebar': (
+    'small': 1,
+    'big': 4
+  ),
+  'main': (
+    'small': 3,
+    'big': 8
+  ),
+);
+
+@function span($span, $column, $gutter) {
+  @return ($span * $column) + (($span - 1) * $gutter);
+}
+
+@function rwd($target, $context) {
+  @return $target / $context * 100%;
+}
+
+@mixin span($span, $grid) {
+  $info: map-get($grids, $grid);
+  $size: map-get($info, 'grid');
+  $column: map-get($info, 'column');
+  $gutter: map-get($info, 'gutter');
+  $target: span($span, $column, $gutter);
+  $context: span($size, $column, $gutter);
+  $gutter: span($gutter / $column, $column, $gutter);
+  width: rwd($target, $context);
+  margin-right: rwd($gutter, $context);
+  float: left;
+}
+
+@mixin mq($min-width) {
+  @media (min-width: #{$min-width}) {
+    @content;
+  }
+}
+
+@each $class, $span in $spans {
+  .#{$class} {
+    @include span(map-get($span, 'small'), 'small');
+
+    @include mq(900px) {
+      @include span(map-get($span, 'big'), 'big');
+    }
+  }
+}
+
+.main {
+  background: red;
+  min-height: 50vh;
+}
+
+.sidebar {
+  background: blue;
+  color: white;
+  min-height: 75vh;
+  margin-right: 0;
+}

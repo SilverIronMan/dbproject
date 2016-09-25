@@ -5,13 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "gulp test",
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "gulp": "gulp",
+    "start": "gulp"
   },
   "author": "Nabil",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "bower": "^1.7.9",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "mongodb": "^2.2.9"
+  },
+  "engines": {
+    "node": "^6.0.0"
   },
   "devDependencies": {
     "eslint": "^3.1.1",

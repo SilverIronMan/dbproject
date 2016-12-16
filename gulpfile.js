@@ -101,4 +101,4 @@ gulp.task('start:prod', () => {
   server('production');
 });
 
-gulp.task('prod', ['dependencies', 'html:prod', 'sass:prod']);
+gulp.task('prod', ['dependencies', 'html:prod', 'sass:prod', 'start:prod']);

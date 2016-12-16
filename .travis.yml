@@ -12,8 +12,8 @@ deploy:
   on:
     branch: master
   provider: heroku
-  api_key:
-    secure: "YOUR ENCRYPTED API KEY"
+#  api_key:
+#    secure:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

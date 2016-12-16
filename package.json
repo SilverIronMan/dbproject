@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "gulp test",
-    "postinstall": "bower install",
+    "postinstall": "npm install -g gulp;bower install",
     "gulp": "gulp",
-    "start": "npm install -g gulp;gulp start:prod"
+    "start": "gulp start:prod"
   },
   "author": "Nabil",
   "license": "ISC",

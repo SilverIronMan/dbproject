@@ -7,7 +7,7 @@
     "test": "gulp test",
     "postinstall": "bower install",
     "gulp": "gulp",
-    "start": "gulp start:prod"
+    "start": "npm install -g gulp;gulp start:prod"
   },
   "author": "Nabil",
   "license": "ISC",

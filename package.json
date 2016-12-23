@@ -1,10 +1,13 @@
 {
-  "name": "AWS-Test",
+  "name": "Thesis Project",
   "version": "0.0.1",
 
   "author": "Nabil",
   "scripts": {
     "start": "node server/server.js"
+  },
+  "engines": {
+    "node": "^3.0.0"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

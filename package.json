@@ -4,7 +4,7 @@
 
   "author": "Nabil",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server/server.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

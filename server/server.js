@@ -1,15 +1,10 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-// const MongoClient = require('mongodb').MongoClient;
 
 const app = express();
 
-let appPort = 4000;
-
-/* MongoClient.connect('link-to-mongodb', (err, database) => {
-  // ... start the server
-});*/
+let appPort = process.env.PORT || 4000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/../public')));

@@ -8,7 +8,8 @@ const Karma = require('karma').Server;
 const path = require('path');
 
 const jsLintFiles = ['**/*.js', '!node_modules/**', '!./public/assets/**',
-  '!./public/lib/**', '!bower_components/**', '!coverage/**'];
+  '!./public/lib/**', '!bower_components/**', '!coverage/**',
+  '!server/tone-analyzer/**'];
 const sassFiles = './sass/*.scss';
 
 const server = (env) => {

@@ -1,8 +1,19 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const env = require('./env');
+const ToneAnalyzerV3 = require('./tone-analyzer/v3');
 
 const app = express();
+
+
+var tone_analyzer = new ToneAnalyzerV3({
+  username: env.toneUser,
+  password: env.tonePass,
+  version_date: '2016-05-19'
+});
+
+console.log(__dirname);
 
 let appPort = process.env.PORT || 4000;
 
@@ -14,7 +25,14 @@ app.get('/', (res) => {
 });
 
 app.post('/quotes', (req) => {
-  console.log(req.body);
+  tone_analyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
+    function(err, tone) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(JSON.stringify(tone, null, 2));
+      }
+  });
 });
 
 if (process.env.VCAP_APP_PORT !== undefined) {

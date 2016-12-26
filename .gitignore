@@ -7,4 +7,4 @@ public/assets
 public/lib
 public/index.html
 coverage/
-server/env.js
+server/.env

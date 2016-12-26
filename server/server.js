@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const env = require('./env');
+const env = require('./.env');
 const ToneAnalyzerV3 = require('./tone-analyzer/v3');
 
 const app = express();

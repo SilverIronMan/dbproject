@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 const env = require('./.env');
-const ToneAnalyzerV3 = require('./tone-analyzer/v3');
 
 const app = express();
 

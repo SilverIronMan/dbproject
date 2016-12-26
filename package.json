@@ -19,6 +19,7 @@
     "solr-client": "^0.6.0",
     "string": "^3.3.3",
     "vcap_services": "^0.2.0",
+    "watson-developer-cloud": "^2.14.3",
     "websocket": "^1.0.23"
   },
   "devDependencies": {

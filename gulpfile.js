@@ -12,14 +12,6 @@ const jsLintFiles = ['**/*.js', '!node_modules/**', '!./public/assets/**',
   '!server/tone-analyzer/**'];
 const sassFiles = './sass/*.scss';
 
-const server = (env) => {
-  nodemon({
-    script: './server/server.js',
-    ext: 'js json html',
-    env: { 'NODE_ENV': env },
-  });
-};
-
 /**
  * Tests
  */
@@ -61,7 +53,11 @@ gulp.task('html', () => {
 
 // Start the server
 gulp.task('start', () => {
-  server('development');
+  nodemon({
+    script: './server/server.js',
+    ext: 'js json html',
+    env: { 'NODE_ENV': 'development' },
+  });
 });
 
 // ES Lint (using Airbnb)
@@ -97,9 +93,4 @@ gulp.task('html:prod', () => {
     .pipe(gulp.dest('./public/'));
 });
 
-// Start the server
-gulp.task('start:prod', () => {
-  server('production');
-});
-
-gulp.task('prod', ['dependencies', 'html:prod', 'sass:prod', 'start:prod']);
+gulp.task('prod', ['dependencies', 'html:prod', 'sass:prod', 'start']);

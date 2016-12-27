@@ -2,7 +2,6 @@ node_modules/
 **/*.DS_Store
 .git
 .sass-cashe
-bower_components/
 public/assets
 public/lib
 public/index.html

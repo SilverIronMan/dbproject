@@ -8,7 +8,7 @@ const Karma = require('karma').Server;
 const path = require('path');
 
 const jsLintFiles = ['**/*.js', '!node_modules/**', '!./public/assets/**',
-  '!./public/lib/**', '!bower_components/**', '!coverage/**',
+  '!./public/lib/**', '!coverage/**',
   '!server/tone-analyzer/**'];
 const sassFiles = './sass/*.scss';
 
@@ -26,12 +26,6 @@ gulp.task('test', () => {
 /**
  * Development Enviroment
  */
-
-// Copy Files
-gulp.task('dependencies', () => {
-  gulp.src('./bower_components/**/*', { base: './bower_components' })
-    .pipe(gulp.dest('./public/lib'));
-});
 
 // Compile the SCSS
 gulp.task('sass', () => {
@@ -73,7 +67,7 @@ gulp.task('lint-watch', () => {
   gulp.watch(jsLintFiles, ['lint']);
 });
 
-gulp.task('default', ['dependencies', 'sass-watch', 'html', 'start', 'lint-watch']);
+gulp.task('default', ['sass-watch', 'html', 'start', 'lint-watch']);
 
 /**
  * Production Enviroment
@@ -93,4 +87,4 @@ gulp.task('html:prod', () => {
     .pipe(gulp.dest('./public/'));
 });
 
-gulp.task('prod', ['dependencies', 'html:prod', 'sass:prod', 'start']);
+gulp.task('prod', ['html:prod', 'sass:prod', 'start']);

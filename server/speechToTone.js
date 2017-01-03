@@ -33,22 +33,20 @@ module.exports = function () {
   recognizeStream.pipe(fs.createWriteStream('transcription.txt'));
   recognizeStream.setEncoding('utf8'); // to get strings instead of Buffers from `data` events
 
-  let speech = "";
+  let speech = '';
   ['data', 'error', 'close'].forEach((eventName) => {
     // Console.log(everything);
     recognizeStream.on(eventName, console.log.bind(console, eventName + ' event: '));
 
     recognizeStream.on(eventName, (event) => {
-
       // Save the data
-      if(eventName == 'data') {
+      if (eventName === 'data') {
         speech += event;
       }
 
       // If or the stream ends or the error is the file is too long, send it to tone
-      if((eventName == 'close') || (eventName == "error" &&
-        event.Reason == "Payload exceeds the 104857600 bytes limit.")) {
-
+      if ((eventName === 'close') || (eventName === 'error' &&
+        event.Reason === 'Payload exceeds the 104857600 bytes limit.')) {
         toneAnalyzer.tone({ text: speech },
           (err, tone) => {
             if (err) {

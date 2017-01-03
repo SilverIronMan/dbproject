@@ -1,18 +1,12 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
-const env = require('../vars.env');
+
+const speechToTone = require('./speechToTone');
 
 const app = express();
 
 const appPort = process.env.PORT || 4000;
-
-const toneAnalyzer = new ToneAnalyzerV3({
-  username: env.toneUser,
-  password: env.tonePass,
-  version_date: '2016-05-19',
-});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/../public')));
@@ -22,14 +16,7 @@ app.get('/', (res) => {
 });
 
 app.post('/quotes', () => {
-  toneAnalyzer.tone({ text: 'Greetings from Watson Developer Cloud!' },
-    (err, tone) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(JSON.stringify(tone, null, 2));
-      }
-    });
+  speechToTone();
 });
 
 const server = app.listen(appPort, () => {

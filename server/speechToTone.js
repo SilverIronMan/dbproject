@@ -22,7 +22,7 @@ const speechToTextParams = {
   content_type: 'audio/wav',
 };
 
-module.exports = function () {
+module.exports = () => {
   return new Promise((fulfill, reject) => {
     // create the stream
     const recognizeStream = speechToText.createRecognizeStream(speechToTextParams);
@@ -55,7 +55,7 @@ module.exports = function () {
                 reject(err);
               } else {
                 console.log(JSON.stringify(tone, null, 2));
-                fulfill(tone);
+                fulfill({ tone, speech });
               }
             });
         }

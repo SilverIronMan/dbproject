@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const speechToTone = require('./speechToTone');
+const db = require('./mongodb');
 
 const app = express();
 
@@ -25,8 +26,11 @@ app.post('/quotes', (req, res) => {
 });
 
 app.get('/tonedata', (req, res) => {
-  res.send(toneData);
+  // db.insertCallData(toneData);
+  res.send(toneData.tone);
 });
+
+db.find();
 
 const server = app.listen(appPort, () => {
   const port = server.address().port;

@@ -69,6 +69,8 @@ gulp.task('lint-watch', () => {
 
 gulp.task('default', ['sass-watch', 'html', 'start', 'lint-watch']);
 
+gulp.task('run-no-lint', ['sass-watch', 'html', 'start']);
+
 /**
  * Production Enviroment
  */

@@ -50,10 +50,13 @@ $.get('/tonedata', (toneDataJSON) => {
       .enter()
       .append('rect')
       .attr('class', 'bar')
-      .attr('y', (d, i) => { return height * (i / (data[index].tones.length)) + 1; })
+      .attr('y', (d, i) => {
+        const yPos = height * (i / (data[index].tones.length));
+        return yPos + 1;
+      })
       .attr('x', () => { return 1; })
       .attr('height', () => { return y.bandwidth() - 2; })
-      .attr('width', (d) => { return d * width - 2; });
+      .attr('width', (d) => { return (d * width) - 2; });
 
     g.selectAll('.value')
       .data(toneData)
@@ -61,7 +64,10 @@ $.get('/tonedata', (toneDataJSON) => {
       .append('text')
       .attr('class', 'value')
       .attr('transform', (d, i) => {
-        return 'translate(' + (width + 5) + ', ' + (height * (i / (data[index].tones.length)) + ((height / data[index].tones.length) + fontSize) / 2) + ')';
+        const xPos = (width + 5);
+        let yPos = height * (i / (data[index].tones.length));
+        yPos += ((height / data[index].tones.length) + fontSize) / 2;
+        return 'translate(' + xPos + ', ' + yPos + ')';
       })
       .text((d) => { return (d * 100).toFixed(2); })
       .style('font-size', fontSize)

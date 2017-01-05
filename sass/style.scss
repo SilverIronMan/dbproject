@@ -70,3 +70,19 @@ $spans: (
   min-height: 75vh;
   margin-right: 0;
 }
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis-y path {
+  display: none;
+}
+
+#watsonTone {
+  text-align: center;
+}

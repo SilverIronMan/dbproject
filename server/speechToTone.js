@@ -23,39 +23,43 @@ const speechToTextParams = {
 };
 
 module.exports = function () {
-  // create the stream
-  const recognizeStream = speechToText.createRecognizeStream(speechToTextParams);
+  return new Promise((fulfill, reject) => {
+    // create the stream
+    const recognizeStream = speechToText.createRecognizeStream(speechToTextParams);
 
-  // pipe in some audio
-  fs.createReadStream(path.join(__dirname, '/../hungry.wav')).pipe(recognizeStream);
+    // pipe in some audio
+    fs.createReadStream(path.join(__dirname, '/../hungry.wav')).pipe(recognizeStream);
 
-  // and pipe out the transcription
-  recognizeStream.pipe(fs.createWriteStream('transcription.txt'));
-  recognizeStream.setEncoding('utf8'); // to get strings instead of Buffers from `data` events
+    // and pipe out the transcription
+    recognizeStream.pipe(fs.createWriteStream('transcription.txt'));
+    recognizeStream.setEncoding('utf8'); // to get strings instead of Buffers from `data` events
 
-  let speech = '';
-  ['data', 'error', 'close'].forEach((eventName) => {
-    // Console.log(everything);
-    recognizeStream.on(eventName, console.log.bind(console, eventName + ' event: '));
+    let speech = '';
+    ['data', 'error', 'close'].forEach((eventName) => {
+      // Console.log(everything);
+      recognizeStream.on(eventName, console.log.bind(console, eventName + ' event: '));
 
-    recognizeStream.on(eventName, (event) => {
-      // Save the data
-      if (eventName === 'data') {
-        speech += event;
-      }
+      recognizeStream.on(eventName, (event) => {
+        // Save the data
+        if (eventName === 'data') {
+          speech += event;
+        }
 
-      // If or the stream ends or the error is the file is too long, send it to tone
-      if ((eventName === 'close') || (eventName === 'error' &&
-        event.Reason === 'Payload exceeds the 104857600 bytes limit.')) {
-        toneAnalyzer.tone({ text: speech },
-          (err, tone) => {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(JSON.stringify(tone, null, 2));
-            }
-          });
-      }
+        // If or the stream ends or the error is the file is too long, send it to tone
+        if ((eventName === 'close') || (eventName === 'error' &&
+          event.Reason === 'Payload exceeds the 104857600 bytes limit.')) {
+          toneAnalyzer.tone({ text: speech },
+            (err, tone) => {
+              if (err) {
+                console.log(err);
+                reject(err);
+              } else {
+                console.log(JSON.stringify(tone, null, 2));
+                fulfill(tone);
+              }
+            });
+        }
+      });
     });
   });
 };

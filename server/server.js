@@ -30,7 +30,7 @@ app.get('/tonedata', (req, res) => {
   res.send(toneData.tone);
 });
 
-db.find();
+// db.find();
 
 const server = app.listen(appPort, () => {
   const port = server.address().port;

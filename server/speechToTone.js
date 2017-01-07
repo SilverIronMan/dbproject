@@ -2,6 +2,7 @@ const path = require('path');
 const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 const SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 const fs = require('fs');
+const sox = require('sox-stream');
 
 const env = require('../vars.env');
 
@@ -27,8 +28,20 @@ module.exports = () => {
     // create the stream
     const recognizeStream = speechToText.createRecognizeStream(speechToTextParams);
 
+    const transcode = sox({
+      input: {
+        volume: 0.9,
+      },
+      output: {
+        rate: 44100,
+        type: 'wav',
+      },
+    });
+
     // pipe in some audio
-    fs.createReadStream(path.join(__dirname, '/../hungry.wav')).pipe(recognizeStream);
+    const srcAudio = fs.createReadStream(path.join(__dirname, '/../2016-12-15T084330~call~2014~6158918677~015902f0-28a3-f0b7-ff92-007d00630001.WAV'));
+
+    srcAudio.pipe(transcode).pipe(recognizeStream);
 
     // and pipe out the transcription
     recognizeStream.pipe(fs.createWriteStream('transcription.txt'));

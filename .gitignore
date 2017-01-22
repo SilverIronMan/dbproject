@@ -9,3 +9,5 @@ coverage/
 *.env
 transcription.txt
 *.WAV
+*.wav
+npm-debug.log

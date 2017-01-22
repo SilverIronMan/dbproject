@@ -2,8 +2,9 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const speechToTone = require('./speechToTone');
+const awsClient = require('./awsClient');
 const db = require('./mongodb');
+const speechToTone = require('./speechToTone');
 
 const app = express();
 
@@ -28,6 +29,12 @@ app.post('/quotes', (req, res) => {
 app.get('/tonedata', (req, res) => {
   // db.insertCallData(toneData);
   res.send(toneData.tone);
+});
+
+app.get('/listCalls', (req, res) => {
+  awsClient.listCalls().then((data) => {
+    res.send(data);
+  })
 });
 
 // db.find();

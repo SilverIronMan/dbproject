@@ -6,7 +6,7 @@
     "start": "node server/server.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.7.21",
+    "aws-sdk": "^2.7.28",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "mongodb": "^2.2.19",

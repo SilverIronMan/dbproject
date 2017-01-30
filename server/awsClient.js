@@ -22,7 +22,7 @@ listCalls = (day) => {
       }
     });
   });
-}
+};
 
 awsModule.listCalls = listCalls;
 
@@ -33,7 +33,7 @@ downloadCall = (callKey) => {
   };
 
   return new Promise((fulfill, reject) => {
-    console.log(params.Key)
+    console.log(params.Key);
     s3.getObject(params, (err, data) => {
       if (err) {
         console.log(err, err.stack);
@@ -49,7 +49,7 @@ downloadCall = (callKey) => {
       }
     });
   });
-}
+};
 
 awsModule.downloadCall = downloadCall;
 

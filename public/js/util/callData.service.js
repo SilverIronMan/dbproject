@@ -1,23 +1,12 @@
 angular.module('app').service('callDataService', function ($http) {
   this.getData = function (key) {
-    return new Promise(function (fulfill, reject) {
+    return new Promise((fulfill, reject) => {
       $http({
         method: 'POST',
-        url: "/api/callData",
-        data: "key=" + key,
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      }).then(function (response, err) {
-        if (err) {
-          reject(err);
-        }
-        fulfill(response);
-      });
-    });
-  };
-
-  this.getDataTest = function (key) {
-    return new Promise(function (fulfill, reject) {
-      $http.get('/api/toneData').then(function (response, err) {
+        url: '/api/callData',
+        data: 'key=' + key,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      }).then((response, err) => {
         if (err) {
           reject(err);
         }

@@ -47,7 +47,7 @@ gulp.task('start', () => {
   });
 });
 
-// ES Lint (using Airbnb)
+// ES Lint (using modified Airbnb)
 gulp.task('lint', () => {
   return gulp.src(jsLintFiles)
     .pipe(eslint())

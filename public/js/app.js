@@ -1,12 +1,12 @@
-var myApp = angular.module('app', ['ui.router']);
+const myApp = angular.module('app', ['ui.router']);
 
-myApp.config(function($stateProvider, $urlServiceProvider) {
+myApp.config(($stateProvider, $urlServiceProvider) => {
   $urlServiceProvider.rules.otherwise({ state: 'home' });
 
   $stateProvider.state('home', {
     url: '/home',
     templateUrl: 'js/home/home.html',
-    controller: 'homeController'
+    controller: 'homeController',
   });
 
   $stateProvider.state('call', {
@@ -14,10 +14,10 @@ myApp.config(function($stateProvider, $urlServiceProvider) {
     templateUrl: 'js/call/call.html',
     controller: 'callController',
     resolve: {
-      callID: function($stateParams) {
+      callID: function ($stateParams) {
         console.log($stateParams.callID);
         return $stateParams.callID;
-      }
-    }
+      },
+    },
   });
 });

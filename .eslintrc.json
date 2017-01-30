@@ -10,6 +10,9 @@
     "import/no-extraneous-dependencies": 0,
     "import/no-unresolved": 1,
     "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
-    "no-shadow": 0
+    "no-shadow": 0,
+    "no-else-return": 1,
+    "no-param-reassign": 0,
+    "object-shorthand": 1
   }
 }

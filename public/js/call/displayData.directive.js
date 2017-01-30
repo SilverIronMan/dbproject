@@ -57,8 +57,11 @@ function generateToneDataDisplay(toneDataJSON) {
       .attr('x', () => { return 1; })
       .attr('height', () => { return y.bandwidth() - 2; })
       .attr('width', (d) => {
-        if((d * width) - 2 < 0) { return 0; }
-        else { return (d * width) - 2; }
+        if ((d * width) - 2 < 0) {
+          return 0;
+        } else {
+          return (d * width) - 2;
+        }
       });
 
     g.selectAll('.value')
@@ -76,21 +79,21 @@ function generateToneDataDisplay(toneDataJSON) {
       .style('font-size', fontSize)
       .style('font-family', fontFamily);
   }
-};
+}
 
-angular.module('app').directive('toneData', function() {
+angular.module('app').directive('toneData', () => {
   return {
     restrict: 'E',
     link: function (scope, element) {
       element.text('Loading...');
-      scope.$watch(function () { return scope.callData; }, 
-        function () {
-          if(scope.callData){
+      scope.$watch(() => { return scope.callData; },
+        () => {
+          if (scope.callData) {
             element.text('');
             generateToneDataDisplay(scope.callData);
           }
-        }
+        },
       );
-    }
-  }
+    },
+  };
 });

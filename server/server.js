@@ -50,7 +50,7 @@ app.get('/api/toneData', (req, res) => {
 app.get('/api/listCalls', (req, res) => {
   awsClient.listCalls().then((data) => {
     res.send(data);
-  })
+  });
 });
 
 // db.find();

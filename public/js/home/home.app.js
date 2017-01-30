@@ -1,5 +1,5 @@
-angular.module('app').controller('homeController', function ($scope, listCalls) {
-  listCalls.getData().then(function(data, error) {
+angular.module('app').controller('homeController', ($scope, listCalls) => {
+  listCalls.getData().then((data, error) => {
     if (error) {
       console.log('Error in getting call list');
       return;

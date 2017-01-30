@@ -27,23 +27,24 @@ listCalls = (day) => {
 awsModule.listCalls = listCalls;
 
 downloadCall = (callKey) => {
-  params = {
+  const params = {
     Bucket: env.bucket,
     Key: callKey,
   };
 
   return new Promise((fulfill, reject) => {
+    console.log(params.Key)
     s3.getObject(params, (err, data) => {
       if (err) {
         console.log(err, err.stack);
         reject(err);
       } else {
-        fs.writeFile('./server/audio/' + data.LastModified + ' ' + data.ETag + '.wav', data.Body, (err) => {
+        fs.writeFile('./server/audio/' + data.LastModified + '.WAV', data.Body, (err) => {
           if (err) {
             console.log(err);
             reject(err);
           }
-          fulfill(data);
+          fulfill('audio/' + data.LastModified + '.WAV');
         });
       }
     });

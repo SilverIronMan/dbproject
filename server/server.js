@@ -19,19 +19,35 @@ app.get('/', (res) => {
   res.sendfile(path.join(__dirname, '/../public/index.html'));
 });
 
-app.post('/quotes', (req, res) => {
-  speechToTone().then((data) => {
-    toneData = data;
-    res.sendFile(path.join(__dirname, '/../public/quotes.html'));
+app.post('/api/callData', (req, res) => {
+  console.log('body key = ', req.body.key);
+  awsClient.downloadCall(req.body.key).then((result, err) => {
+    console.log('Succeded in downloading call = ', result);
+    speechToTone(result).then((data, error) => {
+      if (error) {
+        res.send(error);
+      }
+      console.log('sending the tone data');
+      toneData = data;
+      res.send(toneData.tone);
+    });
   });
 });
 
-app.get('/tonedata', (req, res) => {
+app.post('/api/testCallDataWatson', (req, res) => {
+  speechToTone('audio/Fri, 22 Jul 2016 15:10:24 GMT.WAV').then((data) => {
+    console.log('sending the tone data');
+    toneData = data;
+    res.send(toneData.tone);
+  });
+});
+
+app.get('/api/toneData', (req, res) => {
   // db.insertCallData(toneData);
   res.send(toneData.tone);
 });
 
-app.get('/listCalls', (req, res) => {
+app.get('/api/listCalls', (req, res) => {
   awsClient.listCalls().then((data) => {
     res.send(data);
   })

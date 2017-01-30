@@ -23,7 +23,7 @@ const speechToTextParams = {
   content_type: 'audio/wav',
 };
 
-module.exports = () => {
+module.exports = (fileName) => {
   return new Promise((fulfill, reject) => {
     // create the stream
     const recognizeStream = speechToText.createRecognizeStream(speechToTextParams);
@@ -39,7 +39,8 @@ module.exports = () => {
     });
 
     // pipe in some audio
-    const srcAudio = fs.createReadStream(path.join(__dirname, '/../2016-12-15T084330~call~2014~6158918677~015902f0-28a3-f0b7-ff92-007d00630001.WAV'));
+    console.log('filename = ' + path.join(__dirname, fileName));
+    const srcAudio = fs.createReadStream(path.join(__dirname, fileName));
 
     srcAudio.pipe(transcode).pipe(recognizeStream);
 
@@ -61,6 +62,8 @@ module.exports = () => {
         // If or the stream ends or the error is the file is too long, send it to tone
         if ((eventName === 'close') || (eventName === 'error' &&
           event.Reason === 'Payload exceeds the 104857600 bytes limit.')) {
+            console.log('THEN WE GO TO TONE');
+            console.log(speech);
           toneAnalyzer.tone({ text: speech },
             (err, tone) => {
               if (err) {

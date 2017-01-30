@@ -3,7 +3,6 @@ const sass = require('gulp-sass');
 const eslint = require('gulp-eslint');
 const nodemon = require('gulp-nodemon');
 const rename = require('gulp-rename');
-const processhtml = require('gulp-processhtml');
 const Karma = require('karma').Server;
 const path = require('path');
 
@@ -39,12 +38,6 @@ gulp.task('sass-watch', ['sass'], () => {
   gulp.watch(sassFiles, ['sass']);
 });
 
-gulp.task('html', () => {
-  return gulp.src('./public/index-build.html')
-    .pipe(rename('index.html'))
-    .pipe(gulp.dest('./public/'));
-});
-
 // Start the server
 gulp.task('start', () => {
   nodemon({
@@ -67,9 +60,9 @@ gulp.task('lint-watch', () => {
   gulp.watch(jsLintFiles, ['lint']);
 });
 
-gulp.task('default', ['sass-watch', 'html', 'start', 'lint-watch']);
+gulp.task('default', ['sass-watch', 'start', 'lint-watch']);
 
-gulp.task('run-no-lint', ['sass-watch', 'html', 'start']);
+gulp.task('no-lint', ['sass-watch', 'start']);
 
 /**
  * Production Enviroment
@@ -78,15 +71,8 @@ gulp.task('run-no-lint', ['sass-watch', 'html', 'start']);
 gulp.task('sass:prod', () => {
   return gulp.src(sassFiles)
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-    .pipe(rename('style.min.css'))
+    .pipe(rename('style.css'))
     .pipe(gulp.dest('./public/assets/css'));
 });
 
-gulp.task('html:prod', () => {
-  return gulp.src('./public/index-build.html')
-    .pipe(processhtml())
-    .pipe(rename('index.html'))
-    .pipe(gulp.dest('./public/'));
-});
-
-gulp.task('prod', ['html:prod', 'sass:prod', 'start']);
+gulp.task('prod', ['sass:prod', 'start']);

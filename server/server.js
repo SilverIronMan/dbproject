@@ -47,8 +47,8 @@ app.get('/api/toneData', (req, res) => {
   res.send(toneData.tone);
 });
 
-app.get('/api/listCalls', (req, res) => {
-  awsClient.listCalls().then((data) => {
+app.post('/api/listCalls', (req, res) => {
+  awsClient.listCalls(req.body.filter).then((data) => {
     res.send(data);
   });
 });

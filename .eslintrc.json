@@ -13,6 +13,7 @@
     "no-shadow": 0,
     "no-else-return": 1,
     "no-param-reassign": 0,
-    "object-shorthand": 1
+    "object-shorthand": 1,
+    "prefer-arrow-callback": 0
   }
 }

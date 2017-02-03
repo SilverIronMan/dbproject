@@ -1,7 +1,12 @@
 angular.module('app').service('listCalls', function ($http) {
-  this.getData = function () {
-    return new Promise((fulfill, reject) => {
-      $http.get('/api/listCalls').then((response, error) => {
+  this.getData = function (filter) {
+    return new Promise(function (fulfill, reject) {
+      $http({
+        method: 'POST',
+        url: '/api/listCalls',
+        data: 'filter=' + filter,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      }).then(function (response, error) {
         if (error) {
           reject(error);
         }

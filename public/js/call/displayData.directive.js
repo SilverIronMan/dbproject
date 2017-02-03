@@ -81,18 +81,19 @@ function generateToneDataDisplay(toneDataJSON) {
   }
 }
 
-angular.module('app').directive('toneData', () => {
+angular.module('app').directive('toneData', function () {
   return {
     restrict: 'E',
     link: function (scope, element) {
       element.text('Loading...');
-      scope.$watch(() => { return scope.callData; },
-        () => {
+      scope.$watch(function () { return scope.callData; },
+        function () {
           if (scope.callData) {
             element.text('');
             generateToneDataDisplay(scope.callData);
           }
-        },
+        // eslint-disable-next-line comma-dangle
+        }
       );
     },
   };

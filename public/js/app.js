@@ -1,6 +1,6 @@
 const myApp = angular.module('app', ['ui.router']);
 
-myApp.config(($stateProvider, $urlServiceProvider) => {
+myApp.config(function ($stateProvider, $urlServiceProvider) {
   $urlServiceProvider.rules.otherwise({ state: 'home' });
 
   $stateProvider.state('home', {

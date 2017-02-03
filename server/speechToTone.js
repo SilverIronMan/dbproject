@@ -70,7 +70,7 @@ module.exports = (fileName) => {
                 console.log(err);
                 reject(err);
               } else {
-                console.log(JSON.stringify(tone, null, 2));
+                // console.log(JSON.stringify(tone, null, 2));
                 fulfill({ tone, speech });
               }
             });

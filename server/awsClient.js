@@ -5,12 +5,14 @@ const env = require('../vars.env');
 const s3 = new AWS.S3();
 
 const awsModule = {};
-// '2017/01/18/'
-listCalls = (day) => {
+
+listCalls = (filter) => {
   const params = {
     Bucket: env.bucket,
-    Prefix: day,
+    Prefix: filter,
   };
+
+  console.log(params);
 
   return new Promise((fulfill, reject) => {
     s3.listObjects(params, (err, data) => {

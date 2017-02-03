@@ -1,6 +1,6 @@
-angular.module('app').controller('callController', ($scope, callDataService, callID) => {
+angular.module('app').controller('callController', function ($scope, callDataService, callID) {
   $scope.callID = callID;
-  callDataService.getData(callID).then((data, error) => {
+  callDataService.getData(callID).then(function (data, error) {
     if (error) {
       console.log('There has been an error retreving call data');
       return;

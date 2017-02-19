@@ -9,7 +9,18 @@ angular.module('app').directive('filterCalls', function (listCalls) {
             console.log('Error in getting call list');
             return;
           }
-          scope.callData = data.data.Contents;
+          if (element[0].nextElementSibling.checked) {
+            scope.callData = [];
+
+            for (let i = 0; i < data.data.Contents.length; ++i) {
+              if (data.data.Contents[i].Key.substr(33, 7).match(/~....~[^\*]/)) {
+                scope.callData.push(data.data.Contents[i]);
+              }
+            }
+          } else {
+            scope.callData = data.data.Contents[i];
+          }
+
           scope.$apply();
           console.log(data.data.Contents);
         });

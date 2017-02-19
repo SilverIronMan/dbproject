@@ -1,6 +1,7 @@
 <div>
   <input filter-calls-input type="text" name="filterCalls" />
   <input filter-calls type="button" value="Submit" />
+  <input type="checkbox" checked> Outgoing
   <div ng-repeat="data in callData">
     <a ui-sref="call({callID: data.Key})" ui-sref-active="active">{{ data.Key }}</a>
   </div>

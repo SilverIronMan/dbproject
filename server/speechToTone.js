@@ -50,7 +50,7 @@ module.exports = (fileName) => {
 
     let speech = '';
     ['data', 'error', 'close'].forEach((eventName) => {
-      // Console.log(everything);
+      // The goal is to Console.log(everything);
       recognizeStream.on(eventName, console.log.bind(console, eventName + ' event: '));
 
       recognizeStream.on(eventName, (event) => {
@@ -60,10 +60,10 @@ module.exports = (fileName) => {
         }
 
         // If or the stream ends or the error is the file is too long, send it to tone
-        if ((eventName === 'close') || (eventName === 'error' &&
-          event.Reason === 'Payload exceeds the 104857600 bytes limit.')) {
+        if (((eventName === 'close') || (eventName === 'error' &&
+          event.Reason === 'Payload exceeds the 104857600 bytes limit.')) && speech) {
           console.log('THEN WE GO TO TONE');
-          console.log(speech);
+          console.log('Transcript =>', speech);
           toneAnalyzer.tone({ text: speech },
             (err, tone) => {
               if (err) {
@@ -74,6 +74,8 @@ module.exports = (fileName) => {
                 fulfill({ tone, speech });
               }
             });
+        } else if (!speech) {
+          console.log('No Text Generated From Transcript');
         }
       });
     });

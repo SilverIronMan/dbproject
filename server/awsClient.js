@@ -13,7 +13,6 @@ listCalls = (filter) => {
   };
 
   console.log(params);
-
   return new Promise((fulfill, reject) => {
     s3.listObjects(params, (err, data) => {
       if (err) {

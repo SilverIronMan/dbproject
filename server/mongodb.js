@@ -32,7 +32,36 @@ insertCallData = (callData) => {
 
 dbModule.insertCallData = insertCallData;
 
-find = () => {
+find = (findBy) => {
+  return new Promise((fulfill, reject) => {
+    MongoClient.connect(url, (err, db) => {
+      if (err) {
+        console.log('Unable to connect to the mongoDB server. Error:', err);
+      } else {
+        console.log('Connection established to', url);
+
+        const collection = db.collection('calls');
+
+        collection.find(findBy).toArray((error, result) => {
+          if (error) {
+            console.log(error);
+            fulfill(false);
+          } else if (result.length) {
+            fulfill(result);
+          } else {
+            console.log('No document(s) found with defined "find" criteria!');
+            fulfill(false);
+          }
+        });
+        db.close();
+      }
+    });
+  });
+};
+
+dbModule.find = find;
+
+drop = () => {
   MongoClient.connect(url, (err, db) => {
     if (err) {
       console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -41,19 +70,12 @@ find = () => {
 
       const collection = db.collection('calls');
 
-      collection.find().toArray((error, result) => {
-        if (error) {
-          console.log(error);
-        } else if (result.length) {
-          console.log('Found:', result);
-        } else {
-          console.log('No document(s) found with defined "find" criteria!');
-        }
-      });
+      collection.drop();
+      db.close();
     }
   });
 };
 
-dbModule.find = find;
+dbModule.drop = drop;
 
 module.exports = dbModule;

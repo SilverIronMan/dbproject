@@ -5,7 +5,9 @@ angular.module('app').controller('callController', function ($scope, callDataSer
       console.log('There has been an error retreving call data');
       return;
     }
-    $scope.callData = data.data;
+    $scope.callData = data.data.tone;
+    $scope.speech = data.data.speech;
+    console.log(data);
     $scope.$apply();
     console.log(data);
   });

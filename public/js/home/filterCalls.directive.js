@@ -11,14 +11,14 @@ angular.module('app').directive('filterCalls', function (listCalls) {
           }
           if (element[0].nextElementSibling.checked) {
             scope.callData = [];
-
             for (let i = 0; i < data.data.Contents.length; ++i) {
-              if (data.data.Contents[i].Key.substr(33, 7).match(/~....~[^\*]/)) {
+              if (data.data.Contents[i].Key.substr(33, 7).match(/~....~[^\*]/)
+                || data.data.Contents[i].Key.substr(44, 6).match(/~....~/)) {
                 scope.callData.push(data.data.Contents[i]);
               }
             }
           } else {
-            scope.callData = data.data.Contents[i];
+            scope.callData = data.data.Contents;
           }
 
           scope.$apply();

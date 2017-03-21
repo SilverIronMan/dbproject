@@ -20,18 +20,34 @@ app.get('/', (res) => {
 });
 
 app.post('/api/callData', (req, res) => {
-  console.log('body key = ', req.body.key);
-  awsClient.downloadCall(req.body.key).then((result, err) => {
-    console.log('Succeded in downloading call = ', result);
-    speechToTone(result).then((data, error) => {
-      if (error) {
-        res.send(error);
-      }
-      console.log('sending the tone data');
-      toneData = data;
-      res.send(toneData.tone);
-    });
+  const bodyKey = req.body.key;
+  db.find({ 'key': bodyKey }).then((dbData) => {
+    if (dbData) {
+      console.log('sending', dbData.length, 'entries');
+      console.log('data => ', dbData);
+      res.send(dbData[0]);
+    } else {
+      console.log('no db entry', dbData);
+      awsClient.downloadCall(req.body.key).then((result, err) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log('Succeded in downloading call = ', result);
+        speechToTone(result).then((data, error) => {
+          if (error) {
+            res.send(error);
+          }
+          console.log('sending the tone data');
+          toneData = data;
+          toneData.key = req.body.key;
+          console.log(toneData);
+          db.insertCallData(toneData);
+          res.send({ tone: toneData.tone, speech: toneData.speech });
+        });
+      });
+    }
   });
+  console.log('body key =>', bodyKey);
 });
 
 app.post('/api/testCallDataWatson', (req, res) => {
@@ -43,7 +59,6 @@ app.post('/api/testCallDataWatson', (req, res) => {
 });
 
 app.get('/api/toneData', (req, res) => {
-  // db.insertCallData(toneData);
   res.send(toneData.tone);
 });
 
@@ -53,7 +68,8 @@ app.post('/api/listCalls', (req, res) => {
   });
 });
 
-// db.find();
+// db.drop();
+// db.find().then((data) => { console.log(data); });
 
 const server = app.listen(appPort, () => {
   const port = server.address().port;

@@ -33,7 +33,7 @@ insertCallData = (callData) => {
 dbModule.insertCallData = insertCallData;
 
 find = (findBy) => {
-  return new Promise((fulfill, reject) => {
+  return new Promise((fulfill) => {
     MongoClient.connect(url, (err, db) => {
       if (err) {
         console.log('Unable to connect to the mongoDB server. Error:', err);

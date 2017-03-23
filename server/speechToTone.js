@@ -62,7 +62,7 @@ module.exports = (fileName) => {
         // If or the stream ends or the error is the file is too long, send it to tone
         if (((eventName === 'close') || (eventName === 'error' &&
           event.Reason === 'Payload exceeds the 104857600 bytes limit.')) && speech) {
-          console.log('THEN WE GO TO TONE');
+          console.log('Transcription Process Complete - Tone Analysis Time');
           console.log('Transcript =>', speech);
           toneAnalyzer.tone({ text: speech },
             (err, tone) => {

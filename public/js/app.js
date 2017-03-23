@@ -15,7 +15,6 @@ myApp.config(function ($stateProvider, $urlServiceProvider) {
     controller: 'callController',
     resolve: {
       callID: function ($stateParams) {
-        console.log($stateParams.callID);
         return $stateParams.callID;
       },
     },

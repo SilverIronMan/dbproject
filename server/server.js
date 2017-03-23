@@ -27,7 +27,7 @@ app.post('/api/callData', (req, res) => {
       console.log('data => ', dbData);
       res.send(dbData[0]);
     } else {
-      console.log('no db entry', dbData);
+      console.log('No DataBase entry with that key');
       awsClient.downloadCall(req.body.key).then((result, err) => {
         if (err) {
           console.log(err);
@@ -47,12 +47,11 @@ app.post('/api/callData', (req, res) => {
       });
     }
   });
-  console.log('body key =>', bodyKey);
 });
 
 app.post('/api/testCallDataWatson', (req, res) => {
   speechToTone('audio/Fri, 22 Jul 2016 15:10:24 GMT.WAV').then((data) => {
-    console.log('sending the tone data');
+    console.log('Sending the Tone Data');
     toneData = data;
     res.send(toneData.tone);
   });

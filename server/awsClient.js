@@ -12,9 +12,8 @@ listCalls = (filter) => {
     Prefix: filter,
   };
 
-  console.log(params);
   return new Promise((fulfill, reject) => {
-    s3.listObjects(params, (err, data) => {
+    s3.listObjectsV2(params, (err, data) => {
       if (err) {
         console.log(err);
         reject(err);
@@ -34,7 +33,6 @@ downloadCall = (callKey) => {
   };
 
   return new Promise((fulfill, reject) => {
-    console.log(params.Key);
     s3.getObject(params, (err, data) => {
       if (err) {
         console.log(err, err.stack);

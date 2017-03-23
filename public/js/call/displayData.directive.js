@@ -59,9 +59,8 @@ function generateToneDataDisplay(toneDataJSON) {
       .attr('width', (d) => {
         if ((d * width) - 2 < 0) {
           return 0;
-        } else {
-          return (d * width) - 2;
         }
+        return (d * width) - 2;
       });
 
     g.selectAll('.value')

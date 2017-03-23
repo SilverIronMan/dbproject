@@ -1,14 +1,14 @@
 function generateToneDataDisplay(toneDataJSON) {
   const data = toneDataJSON.document_tone.tone_categories;
 
-  const fontSize = 10;
+  const fontSize = 14;
   const fontFamily = 'Arial';
 
   // Loop through three times to create three bar charts
   for (let index = 0; index < data.length; index++) {
     // Create the svg
-    const margin = { top: 20, right: 40, bottom: 30, left: 100 };
-    const width = 460 - margin.left - margin.right;
+    const margin = { top: 20, right: 50, bottom: 30, left: 130 };
+    const width = 500 - margin.left - margin.right;
     const height = 230 - margin.top - margin.bottom;
 
     const svg = d3.select('#watsonTone')
@@ -36,20 +36,22 @@ function generateToneDataDisplay(toneDataJSON) {
     g.append('g')
       .attr('class', 'axis axis-x')
       .attr('transform', 'translate(' + 0 + ',' + (height) + ')')
+      .style('font-size', fontSize)
       .call(d3.axisBottom(x));
 
     // Draw the y-axis
     g.append('g')
       .attr('class', 'axis axis-y')
+      .style('font-size', fontSize)
       .call(d3.axisLeft(y))
       .append('text');
 
-    // Draw the bars
+      // Draw the bars
     g.selectAll('.bar')
       .data(toneData)
       .enter()
       .append('rect')
-      .attr('class', 'bar')
+      .attr('class', 'bar bar' + index)
       .attr('y', (d, i) => {
         const yPos = height * (i / (data[index].tones.length));
         return yPos + 1;

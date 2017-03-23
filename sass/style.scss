@@ -72,11 +72,19 @@ $spans: (
 }
 
 .bar {
-  fill: steelblue;
+  &0{
+    fill: steelblue;
+  }
+  &1{
+    fill: #ACCE55;
+  }
+  &2{
+    fill: #FFAE42;
+  }
 }
 
 .bar:hover {
-  fill: brown;
+  fill: #EE3B3B;
 }
 
 .axis-y path {
@@ -84,6 +92,6 @@ $spans: (
 }
 
 #watsonTone {
-  text-align: center;
   display: block;
+  text-align: center;
 }

@@ -10,7 +10,39 @@ const app = express();
 
 const appPort = process.env.PORT || 4000;
 
-let toneData;
+let analyzeCall = (key) => {
+  return new Promise((fulfill, reject) => {
+    db.find({ 'key': key }).then((dbData) => {
+      if (dbData) {
+        console.log('sending', dbData.length, 'entries');
+        console.log('data => ', dbData);
+        fulfill(dbData[0]);
+      } else {
+        console.log('No DataBase entry with that key');
+        /* awsClient.listCalls(key).then((result, err) => {
+          console.log('Last Modified', result.Contents[0].LastModified);
+          // console.log('all info', result);
+        }) */
+        awsClient.downloadCall(key).then((result, err) => {
+          if (err) {
+            reject(err);
+          }
+          console.log('Succeded in downloading call = ', result);
+          speechToTone(result).then((data, error) => {
+            if (error) {
+              reject(error);
+            }
+            console.log('sending the tone data');
+            data.key = key;
+            console.log(data);
+            db.insertCallData(data);
+            fulfill({ tone: data.tone, speech: data.speech });
+          });
+        });
+      }
+    });
+  });
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/../public')));
@@ -20,45 +52,9 @@ app.get('/', (res) => {
 });
 
 app.post('/api/callData', (req, res) => {
-  const bodyKey = req.body.key;
-  db.find({ 'key': bodyKey }).then((dbData) => {
-    if (dbData) {
-      console.log('sending', dbData.length, 'entries');
-      console.log('data => ', dbData);
-      res.send(dbData[0]);
-    } else {
-      console.log('No DataBase entry with that key');
-      awsClient.downloadCall(req.body.key).then((result, err) => {
-        if (err) {
-          console.log(err);
-        }
-        console.log('Succeded in downloading call = ', result);
-        speechToTone(result).then((data, error) => {
-          if (error) {
-            res.send(error);
-          }
-          console.log('sending the tone data');
-          toneData = data;
-          toneData.key = req.body.key;
-          console.log(toneData);
-          db.insertCallData(toneData);
-          res.send({ tone: toneData.tone, speech: toneData.speech });
-        });
-      });
-    }
+  analyzeCall(req.body.key).then((data) => {
+    res.send(data);
   });
-});
-
-app.post('/api/testCallDataWatson', (req, res) => {
-  speechToTone('audio/Fri, 22 Jul 2016 15:10:24 GMT.WAV').then((data) => {
-    console.log('Sending the Tone Data');
-    toneData = data;
-    res.send(toneData.tone);
-  });
-});
-
-app.get('/api/toneData', (req, res) => {
-  res.send(toneData.tone);
 });
 
 app.post('/api/listCalls', (req, res) => {

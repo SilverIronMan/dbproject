@@ -1,10 +1,10 @@
-angular.module('app').directive('filterCalls', function (listCalls, passMultipleCallsData) {
+angular.module('app').directive('filterCalls', function (callDataService, passMultipleCallsData) {
   return {
     restrict: 'A',
     link: function (scope, element) {
       element[0].querySelector('#submitFilter').addEventListener('click', function () {
         const filter = element[0].querySelector('#filterCallsBy').value;
-        listCalls.getData(filter).then(function (data, error) {
+        callDataService.getCallList(filter).then(function (data, error) {
           if (error) {
             console.log('Error in getting call list');
             return;
@@ -21,22 +21,24 @@ angular.module('app').directive('filterCalls', function (listCalls, passMultiple
           } else {
             scope.callData = data.data.Contents;
           }
-          scope.$apply();
-          scope.multipleKeys = [];
-          element[0].querySelectorAll('.callMultiSelect').forEach(function (elem) {
-            elem.addEventListener('change', function () {
-              if (elem.checked) {
-                scope.multipleKeys.push(elem.value);
-              } else {
-                // TODO
-              }
-            });
-          });
         });
-
         // Add the multiple call submit button
         scope.displayMultipleSubmitButton = true;
       });
+
+      scope.multipleKeys = [];
+      scope.checkBoxChange = function () {
+        element[0].querySelectorAll('.callMultiSelect').forEach(function (elem) {
+          elem.addEventListener('change', function () {
+            if (elem.checked) {
+              scope.multipleKeys.push(elem.value);
+              console.log(scope.multipleKeys);
+            } else {
+              // TODO
+            }
+          });
+        });
+      };
 
       element[0].querySelector('#multiSubmit').addEventListener('click', function () {
         console.log('submit!', scope.multipleKeys);

@@ -7,6 +7,5 @@ angular.module('app').controller('callController', function ($scope, callDataSer
     }
     $scope.callData = data.data.tone;
     $scope.speech = data.data.speech;
-    $scope.$apply();
   });
 });

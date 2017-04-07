@@ -14,11 +14,8 @@ const analyzeCall = (key) => {
   return new Promise((fulfill, reject) => {
     db.find({ 'key': key }).then((dbData) => {
       if (dbData) {
-        console.log('sending', dbData.length, 'entries');
-        console.log('data => ', dbData);
         fulfill(dbData[0]);
       } else {
-        console.log('No DataBase entry with that key');
         /* awsClient.listCalls(key).then((result, err) => {
           console.log('Last Modified', result.Contents[0].LastModified);
           // console.log('all info', result);
@@ -32,7 +29,6 @@ const analyzeCall = (key) => {
             if (error) {
               reject(error);
             }
-            console.log('sending the tone data');
             data.key = key;
             console.log(data);
             db.insertCallData(data);
@@ -52,9 +48,24 @@ app.get('/', (res) => {
 });
 
 app.post('/api/callData', (req, res) => {
-  analyzeCall(req.body.key).then((data) => {
-    res.send(data);
-  });
+  if (req.body.key !== undefined) {
+    analyzeCall(req.body.key).then((data) => {
+      res.send(data);
+    });
+  }
+
+  if (req.body.keys !== undefined) {
+    req.body.keys = req.body.keys.split(',');
+    const analysis = [];
+
+    req.body.keys.forEach((key) => {
+      analysis.push(analyzeCall(key));
+    });
+
+    Promise.all(analysis).then((analysisComplete) => {
+      res.send(analysisComplete);
+    });
+  }
 });
 
 app.post('/api/listCalls', (req, res) => {

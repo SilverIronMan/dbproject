@@ -1,10 +1,13 @@
-<div>
-  <div filter-calls>
+<div filter-calls>
+  <div>
     <input filter-calls-input type="text" id="filterCallsBy" />
     <input id="submitFilter" type="button" value="Submit" />
     <input id="filterCallsSelector" type="checkbox" checked> Filter
+    <input id="multiSubmit" type="button" ng-show="displayMultipleSubmitButton"
+      value="Multiple Call Analysis" ui-sref="multipleCalls({callID: data.Key})"/>
   </div>
   <div ng-repeat="data in callData">
+    <input type="checkbox" class="checkbox callMultiSelect" value="{{data.Key}}">
     <a ui-sref="call({callID: data.Key})" ui-sref-active="active">{{ data.Key }}</a>
   </div>
 </div>

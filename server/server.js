@@ -10,7 +10,7 @@ const app = express();
 
 const appPort = process.env.PORT || 4000;
 
-let analyzeCall = (key) => {
+const analyzeCall = (key) => {
   return new Promise((fulfill, reject) => {
     db.find({ 'key': key }).then((dbData) => {
       if (dbData) {
@@ -42,7 +42,7 @@ let analyzeCall = (key) => {
       }
     });
   });
-}
+};
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/../public')));

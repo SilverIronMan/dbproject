@@ -19,4 +19,10 @@ myApp.config(function ($stateProvider, $urlServiceProvider) {
       },
     },
   });
+
+  $stateProvider.state('multipleCalls', {
+    url: '/call/multipleCalls',
+    templateUrl: 'js/multipleCalls/multipleCalls.html',
+    controller: 'multipleCallsController',
+  });
 });

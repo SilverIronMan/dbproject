@@ -1,4 +1,4 @@
-angular.module('app').directive('filterCalls', function (listCalls) {
+angular.module('app').directive('filterCalls', function (listCalls, passMultipleCallsData) {
   return {
     restrict: 'A',
     link: function (scope, element) {
@@ -22,7 +22,25 @@ angular.module('app').directive('filterCalls', function (listCalls) {
             scope.callData = data.data.Contents;
           }
           scope.$apply();
+          scope.multipleKeys = [];
+          element[0].querySelectorAll('.callMultiSelect').forEach(function (elem) {
+            elem.addEventListener('change', function () {
+              if (elem.checked) {
+                scope.multipleKeys.push(elem.value);
+              } else {
+                // TODO
+              }
+            });
+          });
         });
+
+        // Add the multiple call submit button
+        scope.displayMultipleSubmitButton = true;
+      });
+
+      element[0].querySelector('#multiSubmit').addEventListener('click', function () {
+        console.log('submit!', scope.multipleKeys);
+        passMultipleCallsData.set(scope.multipleKeys);
       });
     },
   };

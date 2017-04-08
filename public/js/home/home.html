@@ -7,7 +7,7 @@
       value="Multiple Call Analysis" ui-sref="multipleCalls({callID: data.Key})"/>
   </div>
   <div ng-repeat="data in callData">
-    <input type="checkbox" class="checkbox callMultiSelect" value="{{data.Key}}" ng-click="checkBoxChange()">
+    <input type="checkbox" class="checkbox callMultiSelect" value="{{data.Key}}" ng-click="checkBoxChange(this)">
     <a ui-sref="call({callID: data.Key})" ui-sref-active="active">{{ data.Key }}</a>
   </div>
 </div>

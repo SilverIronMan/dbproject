@@ -2,7 +2,7 @@ angular.module('app').directive('filterCalls', function (callDataService, passMu
   return {
     restrict: 'A',
     link: function (scope, element) {
-      element[0].querySelector('#submitFilter').addEventListener('click', function () {
+      const getCallsSubmit = function () {
         const filter = element[0].querySelector('#filterCallsBy').value;
         callDataService.getCallList(filter).then(function (data, error) {
           if (error) {
@@ -24,20 +24,24 @@ angular.module('app').directive('filterCalls', function (callDataService, passMu
         });
         // Add the multiple call submit button
         scope.displayMultipleSubmitButton = true;
+      };
+
+      element[0].querySelector('#submitFilter').addEventListener('click', getCallsSubmit);
+      element[0].querySelector('#filterCallsBy').addEventListener('keypress', function (event) {
+        const key = event.which || event.keyCode;
+        if (key === 13) { // 13 is enter
+          getCallsSubmit();
+        }
       });
 
       scope.multipleKeys = [];
-      scope.checkBoxChange = function () {
-        element[0].querySelectorAll('.callMultiSelect').forEach(function (elem) {
-          elem.addEventListener('change', function () {
-            if (elem.checked) {
-              scope.multipleKeys.push(elem.value);
-              console.log(scope.multipleKeys);
-            } else {
-              // TODO
-            }
-          });
-        });
+      scope.checkBoxChange = function (elem) {
+        const position = scope.multipleKeys.indexOf(elem.data.Key);
+        if (position < 0) {
+          scope.multipleKeys.push(elem.data.Key);
+        } else {
+          scope.multipleKeys.splice(position, 1);
+        }
       };
 
       element[0].querySelector('#multiSubmit').addEventListener('click', function () {

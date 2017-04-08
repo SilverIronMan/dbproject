@@ -15,6 +15,7 @@
     "no-param-reassign": 0,
     "object-shorthand": 1,
     "prefer-arrow-callback": 0,
-    "no-useless-escape": 1
+    "no-useless-escape": 1,
+    "max-len": ["error", 120]
   }
 }

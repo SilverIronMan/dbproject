@@ -22,7 +22,7 @@ insertCallData = (callData) => {
         if (error) {
           console.log(error);
         } else {
-          console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
+          console.log('Inseted into DB: ', result.length, result);
         }
         db.close();
       });
@@ -49,7 +49,7 @@ find = (findBy) => {
           } else if (result.length) {
             fulfill(result);
           } else {
-            console.log('No document(s) found with defined "find" criteria!');
+            console.log('No Previous Analysis Has Been Done');
             fulfill(false);
           }
         });

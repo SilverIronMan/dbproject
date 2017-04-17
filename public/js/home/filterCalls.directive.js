@@ -9,17 +9,28 @@ angular.module('app').directive('filterCalls', function (callDataService, passMu
             console.log('Error in getting call list');
             return;
           }
-          if (element[0].querySelector('#filterCallsSelector').checked) {
+          const incoming = element[0].querySelector('#filterCallsSelectorIncoming').checked;
+          const outgoing = element[0].querySelector('#filterCallsSelectorOutgoing').checked;
+          if (!(incoming || outgoing)) {
+            scope.callData = data.data.Contents;
+          } else {
             scope.callData = [];
-            for (let i = 0; i < data.data.Contents.length; ++i) {
-              // This is specific to Affiliated Creditors System
-              if (data.data.Contents[i].Key.substr(33, 7).match(/~....~[^\*]/)
-                || data.data.Contents[i].Key.substr(44, 6).match(/~....~/)) {
-                scope.callData.push(data.data.Contents[i]);
+            if (outgoing) {
+              for (let i = 0; i < data.data.Contents.length; ++i) {
+                // This is specific to Affiliated Creditors System
+                if (data.data.Contents[i].Key.substr(33, 7).match(/~....~[^\*]/)) {
+                  scope.callData.push(data.data.Contents[i]);
+                }
               }
             }
-          } else {
-            scope.callData = data.data.Contents;
+            if (incoming) {
+              for (let i = 0; i < data.data.Contents.length; ++i) {
+                // This is specific to Affiliated Creditors System
+                if (data.data.Contents[i].Key.substr(44, 6).match(/~....~/)) {
+                  scope.callData.push(data.data.Contents[i]);
+                }
+              }
+            }
           }
         });
         // Add the multiple call submit button

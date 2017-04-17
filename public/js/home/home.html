@@ -2,7 +2,8 @@
   <div>
     <input filter-calls-input type="text" id="filterCallsBy" />
     <input id="submitFilter" type="button" value="Submit" />
-    <input id="filterCallsSelector" type="checkbox" checked> Filter
+    <input id="filterCallsSelectorIncoming" type="checkbox" checked> Filter Incoming
+    <input id="filterCallsSelectorOutgoing" type="checkbox" checked> Filter Outgoing
     <input id="multiSubmit" type="button" ng-show="displayMultipleSubmitButton"
       value="Multiple Call Analysis" ui-sref="multipleCalls({callID: data.Key})"/>
   </div>

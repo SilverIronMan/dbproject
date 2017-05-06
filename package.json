@@ -18,7 +18,7 @@
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.0.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.2.0",
+    "eslint-plugin-react": "^7.0.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-nodemon": "^2.1.0",

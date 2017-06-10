@@ -16,15 +16,15 @@ angular.module('app').controller('multipleCallsController', function ($scope, ca
     $scope.callData = tones[0];
 
     for (let i = 1; i < tones.length; i++) {
-      for(let j = 0; j < tones[i].tone_categories.length; j++) {
-        for(let k = 0; k < tones[i].tone_categories[j].length; k++){
+      for (let j = 0; j < tones[i].tone_categories.length; j++) {
+        for (let k = 0; k < tones[i].tone_categories[j].length; k++) {
           $scope.callData.tone_categories[j].tones[k].score += tones[i].tone_categories[j].tones[k].score;
         }
       }
     }
 
-    for(let j = 0; j < tones[i].tone_categories.length; j++) {
-      for(let k = 0; k < tones[i].tone_categories[j].length; k++){
+    for (let j = 0; j < tones[i].tone_categories.length; j++) {
+      for (let k = 0; k < tones[i].tone_categories[j].length; k++) {
         $scope.callData.tone_categories[j].tones[k].score /= tones.length;
       }
     }

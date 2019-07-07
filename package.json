@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "author": "Nabil",
   "scripts": {
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "aws-sdk": "^2.7.21",
@@ -11,7 +13,8 @@
     "express": "^4.14.0",
     "mongodb": "^2.2.19",
     "sox-stream": "^2.0.0",
-    "watson-developer-cloud": "^2.14.3"
+    "watson-developer-cloud": "^2.14.3",
+    "snyk": "^1.192.3"
   },
   "devDependencies": {
     "eslint": "^3.1.1",
@@ -30,5 +33,6 @@
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.2"
-  }
+  },
+  "snyk": true
 }
